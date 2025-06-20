@@ -67,3 +67,87 @@ Include /www/wwwroot/sunphp.git/*.conf
 4.  [GVP](https://gitee.com/gvp) 全称是 Gitee 最有价值开源项目，是综合评定出的优秀开源项目
 5.  Gitee 官方提供的使用手册 [https://gitee.com/help](https://gitee.com/help)
 6.  Gitee 封面人物是一档用来展示 Gitee 会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
+
+# 项目启动与调试指南
+
+## 一、启动 Docker 服务
+
+1. **安装 Docker Desktop**
+   - 访问 [Docker 官网](https://www.docker.com/products/docker-desktop/) 下载并安装 Docker Desktop。
+   - 启动 Docker Desktop，确保其正常运行。
+
+2. **启动服务容器**
+   - 打开终端（PowerShell），进入项目根目录：
+     ```powershell
+     cd D:\me\epiboly\fuye\projects\im.fuye.io
+     ```
+   - 构建并启动容器：
+     ```powershell
+     docker-compose up -d --build
+     ```
+   - 启动成功后，MySQL、PHP、Nginx 等服务会自动运行。
+
+3. **访问服务**
+   - 通过浏览器访问：
+     - Nginx 默认：http://localhost
+     - 其他服务请参考具体端口映射。
+
+---
+
+## 二、Xdebug 调试配置与使用
+
+### 1. VSCode/Cursor 调试配置
+
+- 打开 `.vscode/launch.json`，确认如下配置：
+  ```json
+  {
+      "name": "Listen for Xdebug",
+      "type": "php",
+      "request": "launch",
+      "port": 9003,
+      "pathMappings": {
+          "/var/www/html": "${workspaceFolder}"
+      },
+      "log": true,
+      "xdebugSettings": {
+          "max_data": 65535,
+          "show_hidden": 1,
+          "max_children": 100,
+          "max_depth": 5
+      }
+  }
+  ```
+
+### 2. Docker Xdebug 配置说明
+
+- `docker-compose.yml` 已配置：
+  - Xdebug 端口为 9003（**未做端口映射**，即没有 `- "9003:9003"`）
+  - Xdebug 通过 `host.docker.internal` 连接宿主机 IDE
+
+### 3. 调试步骤
+
+1. **确保本地 9003 端口未被占用**
+   - 可用命令检查：
+     ```powershell
+     netstat -ano | findstr :9003
+     ```
+   - 如被占用，请释放端口。
+
+2. **启动 Docker 服务**（见上文）
+
+3. **在 VSCode/Cursor 启动调试**
+   - 选择"Listen for Xdebug"配置，点击启动调试。
+
+4. **访问 PHP 页面或接口**
+   - 触发断点，Xdebug 会自动连接到 IDE。
+
+---
+
+## 常见问题
+
+- **端口冲突**：如遇 `listen EACCES: permission denied 0.0.0.0:9003`，请确认本地没有其他进程占用 9003 端口，且 docker-compose 未做 9003 端口映射。
+- **断点无效**：请确认 Xdebug 配置、IDE 监听端口、`pathMappings` 设置正确。
+
+---
+
+如有其他问题，请联系项目维护者或查阅相关文档。
