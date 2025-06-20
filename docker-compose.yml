@@ -13,7 +13,6 @@ services:
       - XDEBUG_CONFIG=client_host=host.docker.internal
     ports:
       - "9000:9000" # PHP-FPM
-      - "9876:9876" # Xdebug端口
       - "9075:9075" # WebSocket端口
     extra_hosts:
       - "host.docker.internal:host-gateway"
@@ -28,7 +27,7 @@ services:
         echo 'xdebug.mode=debug' >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini &&
         echo 'xdebug.start_with_request=yes' >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini &&
         echo 'xdebug.client_host=host.docker.internal' >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini &&
-        echo 'xdebug.client_port=9876' >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini &&
+        echo 'xdebug.client_port=9003' >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini &&
         echo 'xdebug.log=/var/log/xdebug.log' >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini &&
         echo 'xdebug.idekey=CURSOR' >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini &&
         echo 'exec=1' > /usr/local/etc/php/conf.d/docker-php-ext-exec.ini && 
