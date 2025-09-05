@@ -19,17 +19,17 @@ services:
     command: >
       bash -c "
         apt-get update && 
-        apt-get install -y git zip unzip libzip-dev libpng-dev libfreetype6-dev libjpeg62-turbo-dev && 
+        apt-get install -y --fix-missing git zip unzip libzip-dev libpng-dev libfreetype6-dev libjpeg62-turbo-dev && 
         docker-php-ext-configure gd --with-freetype --with-jpeg && 
         docker-php-ext-install -j$(nproc) pdo pdo_mysql mysqli zip gd pcntl posix sockets &&
-        pecl install xdebug-3.1.6 &&
-        docker-php-ext-enable xdebug &&
-        echo 'xdebug.mode=debug' >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini &&
-        echo 'xdebug.start_with_request=yes' >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini &&
-        echo 'xdebug.client_host=host.docker.internal' >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini &&
-        echo 'xdebug.client_port=9003' >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini &&
-        echo 'xdebug.log=/var/log/xdebug.log' >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini &&
-        echo 'xdebug.idekey=CURSOR' >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini &&
+        pecl install xdebug-3.1.5 || echo 'xdebug install failed, continuing...' &&
+        docker-php-ext-enable xdebug 2>/dev/null || echo 'xdebug enable failed, continuing...' &&
+        echo 'xdebug.mode=debug' >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini 2>/dev/null || echo 'xdebug config failed, continuing...' &&
+        echo 'xdebug.start_with_request=yes' >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini 2>/dev/null || echo 'xdebug config failed, continuing...' &&
+        echo 'xdebug.client_host=host.docker.internal' >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini 2>/dev/null || echo 'xdebug config failed, continuing...' &&
+        echo 'xdebug.client_port=9003' >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini 2>/dev/null || echo 'xdebug config failed, continuing...' &&
+        echo 'xdebug.log=/var/log/xdebug.log' >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini 2>/dev/null || echo 'xdebug config failed, continuing...' &&
+        echo 'xdebug.idekey=CURSOR' >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini 2>/dev/null || echo 'xdebug config failed, continuing...' &&
         echo 'exec=1' > /usr/local/etc/php/conf.d/docker-php-ext-exec.ini && 
         echo 'date.timezone = Asia/Shanghai' > /usr/local/etc/php/conf.d/timezone.ini && 
         echo 'disable_functions = ' > /usr/local/etc/php/conf.d/disable_functions.ini && 
