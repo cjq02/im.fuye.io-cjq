@@ -7,6 +7,7 @@ services:
     container_name: sunphp-php
     volumes:
       - ./:/var/www/html
+      - D:\me\epiboly\fuye\resource\img:/var/www/html/boniu
     environment:
       - TZ=Asia/Shanghai
       - PHP_IDE_CONFIG=serverName=im.fuye.io
@@ -75,6 +76,7 @@ services:
     volumes:
       - ./:/var/www/html
       - ./nginx/conf.d:/etc/nginx/conf.d
+      - D:\me\epiboly\fuye\resource\img:/var/www/html/imgs
     ports:
       - "80:80"
     depends_on:
