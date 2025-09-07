@@ -74,7 +74,6 @@ services:
     volumes:
       - ./:/var/www/html
       - ./nginx/conf.d:/etc/nginx/conf.d
-      - D:\me\epiboly\fuye\resource\img:/var/www/html/imgs
     ports:
       - "80:80"
     depends_on:

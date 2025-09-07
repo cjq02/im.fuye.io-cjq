@@ -105,7 +105,7 @@ docker exec -it sunphp-mysql mysql -u root -p123456 sunphp
 - `doMobileGetForumCommentList` - 获取评论列表
 - `doMobileAddForumComment` - 添加评论
 - `doMobileDeleteForumComment` - 删除评论
-- `doMobileThumbUpForumComment` - 点赞评论
+- `doMobileLikeForumComment` - 点赞评论
 
 ## 故障排除
 
