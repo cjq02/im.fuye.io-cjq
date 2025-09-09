@@ -7,8 +7,8 @@ if (!function_exists('mdim_log')) {
     if (!is_string($msg)) {
       $msg = json_encode($msg, JSON_UNESCAPED_UNICODE);
     }
-    $line = '[' . $ts . '] ' . $msg;
-    @error_log($line);
+    $line = '[' . $ts . '] [mdim] ' . $msg;
+    // 只使用 stderr 输出，避免重复日志
     @file_put_contents('php://stderr', $line . PHP_EOL, FILE_APPEND);
 
     // 本地文件按 年月/日.log 落盘，自动创建目录
