@@ -29,7 +29,7 @@ docker exec -it sunphp-php bash
 监控PHP容器中与mdkeji相关的日志：
 
 ```powershell
-docker-compose logs --tail=100 -f php | Select-String "mdkeji"
+docker-compose logs --tail=100 -f php | Select-String "mdim"
 ```
 
 其他有用的日志监控命令：
@@ -39,10 +39,15 @@ docker-compose logs --tail=100 -f php | Select-String "mdkeji"
 docker-compose logs -f php
 
 # 监控最近500行日志
-docker-compose logs --tail=500 -f php | Select-String "mdkeji"
+docker-compose logs --tail=500 -f php | Select-String "mdim"
 
 # 监控多个容器
-docker-compose logs -f php mysql nginx | Select-String "mdkeji"
+docker-compose logs -f php mysql nginx | Select-String "mdim"
+```
+
+解决powershell显示中文乱码问题
+```bash
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 ```
 
 ## 服务说明
