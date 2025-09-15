@@ -1,0 +1,6 @@
+# 允许 Cursor 搜索 uni_im 目录
+# 即使它在 .gitignore 中被排除
+
+# 明确包含 app/uni_im 目录，覆盖 .gitignore 的排除规则
+!app/uni_im/
+!app/uni_im/**

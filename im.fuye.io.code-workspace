@@ -1,0 +1,18 @@
+{
+  "folders": [
+    {
+      "path": "."
+    }
+  ],
+  "settings": {
+    "files.exclude": {
+      "**/app/uni_im/**": false
+    },
+    "search.exclude": {
+      "**/app/uni_im/**": false
+    },
+    "files.watcherExclude": {
+      "**/app/uni_im/**": false
+    }
+  }
+}
