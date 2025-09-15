@@ -39,3 +39,4 @@ install.lock
 
 # uni_im module
 /app/uni_im/
+/data/mysql/

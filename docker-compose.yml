@@ -50,7 +50,7 @@ services:
     image: mysql:5.7
     container_name: sunphp-mysql
     volumes:
-      - mysql_data:/var/lib/mysql
+      - ./data/mysql:/var/lib/mysql
     environment:
       - MYSQL_ROOT_PASSWORD=123456
       - MYSQL_DATABASE=sunphp
