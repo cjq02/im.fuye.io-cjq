@@ -1,21 +1,8 @@
 # 只暴露特定目录给 Cursor 搜索：app/uni_im 与 addons/mdkeji_im
 # 规则：先忽略全部，再逐级放行父目录与目标子目录
 
-# 1) 全部忽略
-*
-
-# 2) 放行 app 目录，但默认仍忽略其子项
-!app/
-app/*
-
 # 3) 放行 app/uni_im 全量内容
-!app/uni_im/
 !app/uni_im/**
 
 # 4) 放行 addons 目录，但默认仍忽略其子项
-!addons/
-addons/*
-
-# 5) 放行 addons/mdkeji_im 全量内容
-!addons/mdkeji_im/
 !addons/mdkeji_im/**

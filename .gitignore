@@ -24,7 +24,7 @@ install.lock
 
 
 # addons module
-/addons/*/
+# /addons/*/
 
 # app module
 # /app/light_im/
@@ -38,5 +38,5 @@ install.lock
 /runtime/*/
 
 # uni_im module
-/app/uni_im/
+# /app/uni_im/
 /data/mysql/
