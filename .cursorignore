@@ -5,4 +5,4 @@
 !app/uni_im/**
 
 # 4) 放行 addons 目录，但默认仍忽略其子项
-!addons/mdkeji_im/**
+!addons/mdkeji_im/** 
