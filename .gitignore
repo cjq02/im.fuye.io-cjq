@@ -40,3 +40,6 @@ install.lock
 # uni_im module
 # /app/uni_im/
 /data/mysql/
+
+# language files
+/addons/mdkeji_im/language/
