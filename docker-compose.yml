@@ -4,8 +4,8 @@ services:
     image: php:7.4-fpm
     container_name: sunphp-php
     volumes:
-      - ./:/var/www/html
-      - D:\me\epiboly\fuye\resource\img:/var/www/html/boniu
+      - ./:/var/www/im.fuye.io
+      - D:\me\epiboly\fuye\resource\img:/var/www/im.fuye.io/boniu
     environment:
       - TZ=Asia/Shanghai
       - PHP_IDE_CONFIG=serverName=im.fuye.io
@@ -32,7 +32,7 @@ services:
         echo 'exec=1' > /usr/local/etc/php/conf.d/docker-php-ext-exec.ini && 
         echo 'date.timezone = Asia/Shanghai' > /usr/local/etc/php/conf.d/timezone.ini && 
         echo 'disable_functions = ' > /usr/local/etc/php/conf.d/disable_functions.ini && 
-        chown -R www-data:www-data /var/www/html && 
+        chown -R www-data:www-data /var/www/im.fuye.io && 
         mkdir -p /usr/local/etc/php && 
         echo 'max_execution_time = 300' > /usr/local/etc/php/conf.d/timeout.ini && 
         echo 'request_terminate_timeout = 300' > /usr/local/etc/php-fpm.d/timeout.conf && 
@@ -43,7 +43,7 @@ services:
         echo 'max_execution_time = 300' >> /usr/local/etc/php/conf.d/upload.ini &&
         echo 'max_input_time = 300' >> /usr/local/etc/php/conf.d/upload.ini &&
         echo 'memory_limit = 256M' >> /usr/local/etc/php/conf.d/upload.ini &&
-        php /var/www/html/addons/mdkeji_im/extend/GatewayWorker/start.php start -d && 
+        php /var/www/im.fuye.io/addons/mdkeji_im/extend/GatewayWorker/start.php start -d && 
         php-fpm
       "
     networks:
@@ -77,7 +77,7 @@ services:
     image: nginx:latest
     container_name: sunphp-nginx
     volumes:
-      - ./:/var/www/html
+      - ./:/var/www/im.fuye.io
       - ./nginx/conf.d:/etc/nginx/conf.d
     ports:
       - "80:80"

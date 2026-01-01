@@ -78,7 +78,7 @@ http://localhost/app/index.php?i=1&c=entry&do=test&m=mdkeji_im&XDEBUG_SESSION_ST
 
 如果需要调试命令行脚本，运行：
 ```bash
-docker-compose exec -e XDEBUG_SESSION=CURSOR php php /var/www/html/你的脚本.php
+docker-compose exec -e XDEBUG_SESSION=CURSOR php php /var/www/im.fuye.io/你的脚本.php
 ```
 
 ## 疑难解答
@@ -91,7 +91,7 @@ docker-compose exec -e XDEBUG_SESSION=CURSOR php php /var/www/html/你的脚本.
    ```
 
 2. 确认pathMappings路径正确：
-   - 容器中的`/var/www/html`应该映射到本地项目根目录
+   - 容器中的`/var/www/im.fuye.io`应该映射到本地项目根目录
 
 3. 检查Xdebug模式设置：
    ```bash

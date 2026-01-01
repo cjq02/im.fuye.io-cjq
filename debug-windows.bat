@@ -215,7 +215,7 @@ echo Windows系统中的路径映射问题常见于Docker环境。
 echo.
 echo 请确认您的launch.json文件中包含正确的路径映射:
 echo     "pathMappings": {
-echo         "/var/www/html": "${workspaceFolder}"
+echo         "/var/www/im.fuye.io": "${workspaceFolder}"
 echo     }
 echo.
 echo 如果Windows路径包含空格或特殊字符，可能会导致映射问题。
