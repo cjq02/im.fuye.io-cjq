@@ -14,6 +14,9 @@ RUN apt-get update && \
         libpng-dev \
         libfreetype6-dev \
         libjpeg62-turbo-dev \
+        socat \
+        procps \
+        net-tools \
         && rm -rf /var/lib/apt/lists/*
 
 # 配置并安装 PHP 扩展
@@ -38,8 +41,12 @@ RUN echo 'exec=1' > /usr/local/etc/php/conf.d/docker-php-ext-exec.ini && \
     echo 'disable_functions = ' > /usr/local/etc/php/conf.d/disable_functions.ini && \
     echo 'max_execution_time = 300' > /usr/local/etc/php/conf.d/timeout.ini && \
     echo 'request_terminate_timeout = 300' > /usr/local/etc/php-fpm.d/timeout.conf && \
+    echo 'catch_workers_output = yes' > /usr/local/etc/php-fpm.d/log-output.conf && \
+    echo 'decorate_workers_output = no' >> /usr/local/etc/php-fpm.d/log-output.conf && \
     echo 'display_errors = On' > /usr/local/etc/php/conf.d/display_errors.ini && \
     echo 'error_reporting = E_ALL' >> /usr/local/etc/php/conf.d/display_errors.ini && \
+    echo 'output_buffering = 0' > /usr/local/etc/php/conf.d/output-buffering.ini && \
+    echo 'implicit_flush = On' >> /usr/local/etc/php/conf.d/output-buffering.ini && \
     echo 'upload_max_filesize = 100M' > /usr/local/etc/php/conf.d/upload.ini && \
     echo 'post_max_size = 100M' >> /usr/local/etc/php/conf.d/upload.ini && \
     echo 'max_execution_time = 300' >> /usr/local/etc/php/conf.d/upload.ini && \

@@ -22,28 +22,6 @@ services:
       - sunphp-network
     restart: no
 
-  # MySQL 5.7 服务
-  mysql:
-    image: mysql:5.7
-    container_name: sunphp-mysql
-    volumes:
-      - ./data/mysql:/var/lib/mysql
-    environment:
-      - MYSQL_ROOT_PASSWORD=123456
-      - MYSQL_DATABASE=sunphp
-      - TZ=Asia/Shanghai
-    ports:
-      - "3306:3306"
-    command: >
-      bash -c "
-        chown -R mysql:mysql /var/lib/mysql && 
-        chmod -R 755 /var/lib/mysql && 
-        exec docker-entrypoint.sh mysqld
-      "
-    networks:
-      - sunphp-network
-    restart: no
-
   # Nginx 服务
   nginx:
     image: nginx:latest
@@ -61,7 +39,6 @@ services:
 
 networks:
   sunphp-network:
+    name: sunphp-network
     driver: bridge
 
-volumes:
-  mysql_data:
