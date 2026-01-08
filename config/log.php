@@ -15,8 +15,8 @@ defined('SUN_IN') or exit('Sunphp Access Denied');
 return [
     // 默认日志记录通道
     'default'      => env('log.channel', 'file'),
-    // 日志记录级别
-    'level'        => [],
+    // 日志记录级别（空数组表示记录所有级别）
+    'level'        => ['error', 'warning', 'info', 'sql', 'notice', 'alert'],
     // 日志类型记录的通道 ['error'=>'email',...]
     'type_channel' => [],
     // 关闭全局日志写入
@@ -33,8 +33,8 @@ return [
             'path'           => '',
             // 单文件日志写入
             'single'         => false,
-            // 独立日志级别
-            'apart_level'    => [],
+            // 独立日志级别（错误和警告单独记录）
+            'apart_level'    => ['error', 'warning'],
             // 最大日志文件数量
             'max_files'      => 0,
             // 使用JSON格式记录
@@ -45,8 +45,8 @@ return [
             'close'          => false,
             // 日志输出格式化
             'format'         => '[%s][%s] %s',
-            // 是否实时写入
-            'realtime_write' => false,
+            // 是否实时写入（生产环境建议开启）
+            'realtime_write' => true,
         ],
         // 其它日志通道配置
     ],
