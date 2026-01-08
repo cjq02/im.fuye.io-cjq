@@ -30,14 +30,13 @@
         "ramsey/uuid": "^4.2",
         "firebase/php-jwt": "^6.4",
         "topthink/think-queue": "^3.0",
-        "yansongda/pay": "^3.2",
+        "yansongda/pay": "^3.2,<3.4",
         "php-di/php-di": "^6.4",
         "qiniu/php-sdk": "^7.7",
         "aliyuncs/oss-sdk-php": "^2.6",
         "qcloud/cos-sdk-v5": "^2.6",
         "alibabacloud/dysmsapi-20170525": "^2.0.24",
         "phpmailer/phpmailer": "^6.7",
-        "tencentcloud/tencentcloud-sdk-php": "^3.0",
         "smarty/smarty": "^4.3",
         "alibabacloud/green-20220302": "^2.1"
     },
@@ -54,7 +53,10 @@
         }
     },
     "config": {
-        "preferred-install": "dist"
+        "preferred-install": "dist",
+        "allow-plugins": {
+            "easywechat-composer/easywechat-composer": true
+        }
     },
     "scripts": {
         "post-autoload-dump": [
