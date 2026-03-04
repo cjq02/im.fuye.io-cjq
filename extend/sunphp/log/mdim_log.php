@@ -27,4 +27,28 @@ if (!function_exists('mdim_log')) {
   }
 }
 
+// Telegram 专用日志：标签 [telegram]，落盘到 runtime/telegram/log
+if (!function_exists('telegram_log')) {
+  function telegram_log($msg)
+  {
+    $ts = date('Y-m-d H:i:s');
+    if (!is_string($msg)) {
+      $msg = json_encode($msg, JSON_UNESCAPED_UNICODE);
+    }
+    $line = '[' . $ts . '] [telegram] ' . $msg;
+    @file_put_contents('php://stderr', $line . PHP_EOL, FILE_APPEND);
 
+    if (defined('IA_ROOT')) {
+      $logBaseDir = IA_ROOT . '/runtime/telegram/log';
+    } else {
+      $logBaseDir = __DIR__ . '/../../../../runtime/telegram/log';
+    }
+    $yearMonth = date('Ym');
+    $dayFile = date('d') . '.log';
+    $targetDir = $logBaseDir . '/' . $yearMonth;
+    if (!is_dir($targetDir)) {
+      @mkdir($targetDir, 0777, true);
+    }
+    @file_put_contents($targetDir . '/' . $dayFile, $line . PHP_EOL, FILE_APPEND);
+  }
+}
