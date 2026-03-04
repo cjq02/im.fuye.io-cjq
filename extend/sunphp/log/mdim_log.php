@@ -19,12 +19,14 @@ if (!function_exists('mdim_log')) {
     $dayFile = date('d') . '.log';
     $targetDir = $logBaseDir . '/' . $yearMonth;
     if (!is_dir($targetDir)) {
-      @mkdir($logBaseDir, 0777, true);
-      @mkdir($targetDir, 0777, true);
+      @mkdir($logBaseDir, 0775, true);
+      @mkdir($targetDir, 0775, true);
     }
     $logFile = $targetDir . '/' . $dayFile;
     $written = @file_put_contents($logFile, $line . PHP_EOL, FILE_APPEND);
-    if ($written === false && function_exists('error_log')) {
+    if ($written !== false) {
+      @chmod($logFile, 0664);
+    } elseif (function_exists('error_log')) {
       error_log('[mdim_log] write failed, fallback: ' . $line . ' (dir=' . $logBaseDir . ')');
     }
   }
@@ -50,8 +52,10 @@ if (!function_exists('telegram_log')) {
     $dayFile = date('d') . '.log';
     $targetDir = $logBaseDir . '/' . $yearMonth;
     if (!is_dir($targetDir)) {
-      @mkdir($targetDir, 0777, true);
+      @mkdir($targetDir, 0775, true);
     }
-    @file_put_contents($targetDir . '/' . $dayFile, $line . PHP_EOL, FILE_APPEND);
+    $logFile = $targetDir . '/' . $dayFile;
+    @file_put_contents($logFile, $line . PHP_EOL, FILE_APPEND);
+    @chmod($logFile, 0664);
   }
 }
