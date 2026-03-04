@@ -8,10 +8,8 @@ if (!function_exists('mdim_log')) {
       $msg = json_encode($msg, JSON_UNESCAPED_UNICODE);
     }
     $line = '[' . $ts . '] [mdim] ' . $msg;
-    // 只使用 stderr 输出，避免重复日志
     @file_put_contents('php://stderr', $line . PHP_EOL, FILE_APPEND);
 
-    // 本地文件按 年月/日.log 落盘，自动创建目录
     if (defined('IA_ROOT')) {
       $logBaseDir = IA_ROOT . '/runtime/mdim/log';
     } else {
@@ -21,9 +19,14 @@ if (!function_exists('mdim_log')) {
     $dayFile = date('d') . '.log';
     $targetDir = $logBaseDir . '/' . $yearMonth;
     if (!is_dir($targetDir)) {
+      @mkdir($logBaseDir, 0777, true);
       @mkdir($targetDir, 0777, true);
     }
-    @file_put_contents($targetDir . '/' . $dayFile, $line . PHP_EOL, FILE_APPEND);
+    $logFile = $targetDir . '/' . $dayFile;
+    $written = @file_put_contents($logFile, $line . PHP_EOL, FILE_APPEND);
+    if ($written === false && function_exists('error_log')) {
+      error_log('[mdim_log] write failed, fallback: ' . $line . ' (dir=' . $logBaseDir . ')');
+    }
   }
 }
 
