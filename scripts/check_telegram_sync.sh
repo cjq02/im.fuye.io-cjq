@@ -29,18 +29,31 @@ else
 fi
 echo ""
 
-# 2. Cron 服务是否在跑（仅 Linux）
+# 2. Cron 服务是否在跑（Linux：Debian/Ubuntu 用 cron，CentOS/RHEL 用 crond）
 echo "2. Cron 服务"
-if command -v service &>/dev/null; then
-  if service cron status &>/dev/null; then
-    echo "   ✅ cron 服务在运行"
+CRON_RUNNING=""
+if command -v systemctl &>/dev/null && systemctl is-active crond &>/dev/null; then
+  CRON_RUNNING=1
+  echo "   ✅ crond 服务在运行（systemctl）"
+elif command -v systemctl &>/dev/null && systemctl is-active cron &>/dev/null; then
+  CRON_RUNNING=1
+  echo "   ✅ cron 服务在运行（systemctl）"
+elif command -v service &>/dev/null && service crond status &>/dev/null; then
+  CRON_RUNNING=1
+  echo "   ✅ crond 服务在运行（service）"
+elif command -v service &>/dev/null && service cron status &>/dev/null; then
+  CRON_RUNNING=1
+  echo "   ✅ cron 服务在运行（service）"
+fi
+if [ -z "$CRON_RUNNING" ]; then
+  if [ -n "$(ps aux 2>/dev/null | grep -v grep | grep -E 'crond|cron')" ]; then
+    echo "   ✅ 有 cron/crond 进程"
   else
-    echo "   ❌ cron 服务未运行。修复：service cron start"
+    echo "   ❌ cron 服务未运行"
+    echo "   修复（CentOS/本机）：systemctl start crond && systemctl enable crond"
+    echo "   或：service crond start"
+    echo "   修复（Debian/Docker）：service cron start"
   fi
-elif [ -n "$(ps aux 2>/dev/null | grep -v grep | grep cron)" ]; then
-  echo "   ✅ 有 cron 进程"
-else
-  echo "   ⚠️  无法确认 cron 状态（可能非 Linux 或无 service 命令）"
 fi
 echo ""
 
@@ -81,5 +94,7 @@ echo ""
 
 echo "=========================================="
 echo "若 Crontab 未配置或 Cron 未启动，同步会停止。"
-echo "Docker 内一键修复：bash $ROOT/addons/mdkeji_im/scripts/telegram/setup_docker_cron.sh"
+echo "  CentOS/本机：systemctl start crond && systemctl enable crond"
+echo "  重装 Crontab：bash $ROOT/addons/mdkeji_im/scripts/telegram/install_cron.sh"
+echo "  Docker 内：  bash $ROOT/addons/mdkeji_im/scripts/telegram/setup_docker_cron.sh"
 echo "=========================================="
