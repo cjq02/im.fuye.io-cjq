@@ -24,24 +24,16 @@ nginx.htaccess
 install.lock
 
 
-# addons module
-/addons/*/
-
-# app module
-# /app/light_im/
-
-
+# addons/mdkeji_im 为独立 Git 项目，本仓库不包含
+/addons/mdkeji_im/
 
 # attachment
-/attachment/*/
+/attachment/
 
 # runtime
-/runtime/*/
+/runtime/
 
-# uni_im module
+# app module（按需取消注释）
 /app/uni_im/
 
 /data/mysql/
-
-# language files
-/addons/mdkeji_im/language/
