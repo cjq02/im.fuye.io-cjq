@@ -24,8 +24,10 @@ nginx.htaccess
 install.lock
 
 
-# addons/mdkeji_im 为独立 Git 项目，本仓库不包含
+# addons 下独立 Git 项目，本仓库不包含
 /addons/mdkeji_im/
+/addons/mdkeji_im_copy/
+/addons/origin/
 
 # attachment
 /attachment/
