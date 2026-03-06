@@ -29,30 +29,29 @@ else
 fi
 echo ""
 
-# 2. Cron 服务是否在跑（Linux：Debian/Ubuntu 用 cron，CentOS/RHEL 用 crond）
+# 2. Cron 服务是否在跑（Docker 内多为 cron，本机 CentOS 为 crond）
 echo "2. Cron 服务"
 CRON_RUNNING=""
-if command -v systemctl &>/dev/null && systemctl is-active crond &>/dev/null; then
+if command -v service &>/dev/null && service cron status &>/dev/null; then
   CRON_RUNNING=1
-  echo "   ✅ crond 服务在运行（systemctl）"
+  echo "   ✅ cron 服务在运行（Docker/Debian）"
 elif command -v systemctl &>/dev/null && systemctl is-active cron &>/dev/null; then
   CRON_RUNNING=1
-  echo "   ✅ cron 服务在运行（systemctl）"
+  echo "   ✅ cron 服务在运行（Docker/Debian）"
 elif command -v service &>/dev/null && service crond status &>/dev/null; then
   CRON_RUNNING=1
-  echo "   ✅ crond 服务在运行（service）"
-elif command -v service &>/dev/null && service cron status &>/dev/null; then
+  echo "   ✅ crond 服务在运行（CentOS）"
+elif command -v systemctl &>/dev/null && systemctl is-active crond &>/dev/null; then
   CRON_RUNNING=1
-  echo "   ✅ cron 服务在运行（service）"
+  echo "   ✅ crond 服务在运行（CentOS）"
 fi
 if [ -z "$CRON_RUNNING" ]; then
   if [ -n "$(ps aux 2>/dev/null | grep -v grep | grep -E 'crond|cron')" ]; then
     echo "   ✅ 有 cron/crond 进程"
   else
     echo "   ❌ cron 服务未运行"
-    echo "   修复（CentOS/本机）：systemctl start crond && systemctl enable crond"
-    echo "   或：service crond start"
-    echo "   修复（Debian/Docker）：service cron start"
+    echo "   修复 Docker 内：service cron start"
+    echo "   修复 CentOS 本机：systemctl start crond && systemctl enable crond"
   fi
 fi
 echo ""
@@ -93,8 +92,8 @@ fi
 echo ""
 
 echo "=========================================="
-echo "若 Crontab 未配置或 Cron 未启动，同步会停止。"
-echo "  CentOS/本机：systemctl start crond && systemctl enable crond"
-echo "  重装 Crontab：bash $ROOT/addons/mdkeji_im/scripts/telegram/install_cron.sh"
+echo "若 Crontab 未配置或 cron 未启动，同步会停止。"
 echo "  Docker 内：  bash $ROOT/addons/mdkeji_im/scripts/telegram/setup_docker_cron.sh"
+echo "  CentOS 本机：systemctl start crond && systemctl enable crond"
+echo "  重装 Crontab：bash $ROOT/addons/mdkeji_im/scripts/telegram/install_cron.sh"
 echo "=========================================="
